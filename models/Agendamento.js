@@ -33,22 +33,21 @@ class Agendamento {
                 a.detalhes, 
                 a.unidade, 
                 c.nome AS nome_cliente,
-                pt.nome AS nome_pet,
-                pr.nome AS nome_profissional
+                pt.nome AS nome_pet
             FROM 
                 agendamento a 
             INNER JOIN 
-                pet pt ON a.id_pet = pt.id_cliente 
+                pet pt ON a.id_pet = pt.id_pet 
 			INNER JOIN 
                 cliente c ON pt.id_cliente = c.id_cliente 
-            INNER JOIN 
-                profissional pr ON a.id_profissional = pr.id_profissional 
             WHERE c.id_cliente = $1
         `;
         const values = [id_cliente]
 
         try {
             const result = await client.query(query, values);
+
+            console.log(result)
             return result.rows;
         } catch (error) {
             throw new Error('Erro ao buscar agendamentos: ' + error.message);
