@@ -4,9 +4,7 @@ module.exports = {
     cadastrarCliente: async (req, res) => {
         try {
             const dados = req.body;
-            console.log(dados);
             const cliente = await Cliente.criarCliente(dados);
-            console.log(cliente);
 
             return res.status(201).json(cliente);
         } catch (error) {

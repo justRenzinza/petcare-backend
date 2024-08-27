@@ -18,6 +18,6 @@ router.get('/listar-clinicas', listarClinicas);
 
 // Agendamento
 router.post('/agendar-consulta', agendarConsulta);
-router.get('/listar-consultas', listarAgendamentos);
+router.post('/listar-consultas', listarAgendamentos);
 
 module.exports = router;

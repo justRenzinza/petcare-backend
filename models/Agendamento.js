@@ -23,7 +23,7 @@ class Agendamento {
     }
 
     // Deixei sem where, pois entendi que irá mostrar todos e não os agendamentos por cliente
-    static async getAgendamentos() {
+    static async getAgendamentosByCLiente(id_cliente) {
         const client = await pool.connect();
         const query = `
             SELECT 
@@ -43,10 +43,12 @@ class Agendamento {
                 cliente c ON pt.id_cliente = c.id_cliente 
             INNER JOIN 
                 profissional pr ON a.id_profissional = pr.id_profissional 
+            WHERE c.id_cliente = $1
         `;
+        const values = [id_cliente]
 
         try {
-            const result = await client.query(query);
+            const result = await client.query(query, values);
             return result.rows;
         } catch (error) {
             throw new Error('Erro ao buscar agendamentos: ' + error.message);
