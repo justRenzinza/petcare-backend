@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cadastrar Pet - PetCare</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="css/estilocadpet.css" />
+
+    <link rel="icon" type="image/png" href="img/logopetcare-icon.png" />
+  </head>
+
+  <header>
+    <nav>
+      <ul id="nav-bar">
+        <li id="logo">
+          <a href="index.html"><img src="img/logopetcare.png" alt="logo" /></a>
+        </li>
+        <li>
+          <div id="menu-itens">
+            <li id="itens">
+              <a href="agendamentopet.html">Agendar Consulta</a>
+            </li>
+            <li id="itens">
+              <a href="minhasconsultas.html">Minhas Consultas</a>
+            </li>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <body>
+    <div id="container">
+      <img class="img-cadastro" src="img/logopetcare.png" />
+
+      <div class="button-login">
+        <h2>INFORME OS DADOS DO SEU PET PARA FAZER O CADASTRO</h2>
+      </div>
+
+      <form id="cadastro-pet-form">
+        <div>
+          <input
+            class="nome-pet"
+            type="text"
+            name="nome-pet"
+            required
+            placeholder="Nome do Animal"
+          />
+        </div>
+
+        <div>
+          <input
+            class="raca-pet"
+            type="text"
+            name="raca-pet"
+            placeholder="Raça"
+          />
+        </div>
+
+        <div>
+          <input
+            class="tipo-pet"
+            type="text"
+            name="tipo-pet"
+            placeholder="Espécie"
+          />
+        </div>
+
+        <div>
+          <input
+            class="idade-pet"
+            type="text"
+            name="idade-pet"
+            placeholder="Idade (anos)"
+          />
+        </div>
+
+        <div>
+          <input
+            class="tipo-sanguineo-pet"
+            type="text"
+            name="tipo-sanguineo-pet"
+            placeholder="Tipo Sanguíneo"
+          />
+        </div>
+
+        <div>
+          <input
+            class="enfermidades-pet"
+            type="text"
+            name="enfermidades-pet"
+            placeholder="Enfermidades"
+          />
+        </div>
+
+        <div>
+          <input
+            class="vacinas-pet"
+            type="text"
+            name="vacinas-pet"
+            placeholder="Vacinas tomadas"
+          />
+        </div>
+
+        <div>
+          <button type="submit" class="submit">Cadastrar Pet</button>
+        </div>
+      </form>
+      <img class="img-footer" src="img/patas_completas.png" />
+    </div>
+
+    <script>
+      document
+        .getElementById("cadastro-pet-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault(); // Impede o envio padrão do formulário
+
+          // Coletar os dados do formulário
+          const nome = document.querySelector('input[name="nome-pet"]').value;
+          const raca = document.querySelector('input[name="raca-pet"]').value;
+          const especie = document.querySelector(
+            'input[name="tipo-pet"]'
+          ).value;
+          const idade = document.querySelector('input[name="idade-pet"]').value;
+          const tiposangue = document.querySelector(
+            'input[name="tipo-sanguineo-pet"]'
+          ).value;
+          const enfermidade = document.querySelector(
+            'input[name="enfermidades-pet"]'
+          ).value;
+          const vacina = document.querySelector(
+            'input[name="vacinas-pet"]'
+          ).value;
+
+          const id_cliente = localStorage.getItem("clientId");
+
+          try {
+            // Fazer a requisição ao backend
+            const response = await fetch(
+              "http://localhost:3000/cadastrar-pet",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  nome,
+                  raca,
+                  especie,
+                  idade,
+                  tiposangue,
+                  enfermidade,
+                  vacina,
+                  id_cliente,
+                }),
+              }
+            );
+            if (response.ok) {
+              // Redirecionar para a página de agendamento ou mostrar uma mensagem de sucesso
+              window.location.href = "agendamentopet.html"; // Exemplo de redirecionamento
+            } else {
+              // Tratar erro, mostrar mensagem de erro
+              const errorMessage = await response.json();
+              alert("Erro no cadastro do pet: " + errorMessage.message);
+            }
+          } catch (error) {
+            // Tratar erro de rede ou outros erros
+            console.error("Erro ao tentar cadastrar o pet:", error);
+            alert(
+              "Erro ao tentar cadastrar o pet. Tente novamente mais tarde."
+            );
+          }
+        });
+    </script>
+  </body>
+
+  <footer></footer>
+</html>

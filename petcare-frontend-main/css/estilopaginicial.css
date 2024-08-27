@@ -1,0 +1,191 @@
+body{
+    background-color: #f2f0f8;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Verdana;
+    
+}
+
+#nav-bar {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    justify-content:space-around;
+    padding-right: 50px;
+    padding-left: 20px;
+}
+
+#itens {
+    background-color: #f0740e;
+    list-style: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0.5rem 0.9rem;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+#itens a {
+    text-decoration: none;
+    color: #fff;
+}
+
+ul{
+    list-style: none;
+}
+
+li img {
+    padding-top: 10px;
+    margin-right: 800px;
+}
+
+.container-geral{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: rgb(209, 121, 39);
+    margin-left: 200px;
+    margin-right: 200px;
+    border-radius: 40px;
+}
+
+.foto-do-pet img{
+    margin-left: 20px;
+    display: flex;
+    max-width: 100%;
+    border-radius: 60px;
+}
+
+.fotos-clinica img{
+    margin-left: 20px;
+    margin-right: 26px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    flex-direction: row;
+    max-width: 30%;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.fotos-clinica img:hover{
+    transform: scale(1.1);
+}
+
+.fotos-vet img{
+    margin-left: 10%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    max-width: 10%;
+    border-radius: 100%;
+    transition: transform 0.3s ease;
+}
+
+.fotos-vet img:hover {
+    transform: scale(1.1);
+}
+
+.profissionais {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.profissional-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 45%;
+}
+
+.profissional-item img {
+    max-width: 20%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.profissional-item p {
+    flex: 1;
+    font-weight: bold;
+    color: #fff;
+    text-align: justify;
+}
+.text-container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    max-width: 600px;
+}
+
+.text-container2{
+    display: block;
+    flex-direction: column;
+    margin-left: 400px;
+    margin-right: 400px;
+    text-align: center;
+}
+
+.text-container3{
+    display: block;
+    flex-direction: column;
+    margin-left: 400px;
+    margin-right: 400px;
+    text-align: center;
+}
+
+h2{
+    margin-bottom: 15px;
+    background-color: rgb(209, 121, 39);
+    color: #fff;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    border-radius: 30px;
+    text-align: center;
+}
+
+p{
+    line-height: 1.6;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    padding-right: 20px;
+    background-color: rgb(209, 121, 39);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 30px;
+    text-align: justify;  
+}
+
+.faixa{
+    color: #ffffff;
+    background-color: rgb(209, 121, 39);
+    text-align: center;
+    padding: 50px 80px;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    font-size: 30px;
+    
+}
+
+article{
+    
+    width: 310px;
+    margin-bottom: 100px;
+}
+
+.zoom {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}

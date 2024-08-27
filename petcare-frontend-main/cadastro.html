@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Realizar Cadastro - PetCare</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="css/estilocadastro.css" />
+
+    <link rel="icon" type="image/png" href="img/logopetcare-icon.png" />
+  </head>
+
+  <header>
+    <nav>
+      <ul id="nav-bar">
+        <li id="logo">
+          <a href="index.html"><img src="img/logopetcare.png" alt="logo" /></a>
+        </li>
+        <li>
+          <div id="menu-itens">
+            <li id="itens"><a href="login.html">Fazer Login</a></li>
+            <li id="itens"><a href="cadastro.html">Cadastre-se</a></li>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <body>
+    <div id="container">
+      <img class="img-cadastro" src="img/logopetcare.png" />
+
+      <div class="button-login">
+        <h2>INFORME SEUS DADOS PESSOAIS</h2>
+      </div>
+
+      <form id="cadastro-form">
+        <div>
+          <input
+            class="nome"
+            type="text"
+            name="nome"
+            required
+            placeholder="Nome Completo"
+          />
+        </div>
+
+        <div>
+          <input
+            class="senha"
+            type="password"
+            name="senha"
+            required
+            placeholder="Digite uma senha"
+          />
+        </div>
+
+        <div>
+          <input
+            class="email"
+            type="text"
+            name="email"
+            required
+            placeholder="Digite seu email"
+          />
+        </div>
+
+        <div>
+          <input
+            class="cpf"
+            type="text"
+            name="cpf"
+            required
+            placeholder="Digite seu CPF"
+          />
+        </div>
+
+        <div>
+          <button type="submit" class="submit">Finalizar Cadastro</button>
+        </div>
+      </form>
+      <img class="img-footer" src="img/patas_completas.png" />
+    </div>
+
+    <script>
+      document
+        .getElementById("cadastro-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault(); // Impede o envio padrão do formulário
+
+          // Coletar os dados do formulário
+          const nome = document.querySelector('input[name="nome"]').value;
+          const senha = document.querySelector('input[name="senha"]').value;
+          const email = document.querySelector('input[name="email"]').value;
+          const cpf = document.querySelector('input[name="cpf"]').value;
+
+          try {
+            // Fazer a requisição ao backend
+            const response = await fetch("http://localhost:3000/cadastro", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ nome, senha, email, cpf }),
+            });
+
+            if (response.ok) {
+              // Redirecionar para a página de login ou mostrar uma mensagem de sucesso
+              window.location.href = "login.html"; // Exemplo de redirecionamento
+            } else {
+              // Tratar erro, mostrar mensagem de erro
+              const errorMessage = await response.json();
+              alert("Erro no cadastro: " + errorMessage.message);
+            }
+          } catch (error) {
+            // Tratar erro de rede ou outros erros
+            console.error("Erro ao tentar realizar o cadastro:", error);
+            alert(
+              "Erro ao tentar realizar o cadastro. Tente novamente mais tarde."
+            );
+          }
+        });
+    </script>
+  </body>
+
+  <footer></footer>
+</html>

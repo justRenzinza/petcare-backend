@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Agendamento - PetCare</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/estiloagendamento.css" />
+    <link rel="icon" type="image/png" href="img/logopetcare-icon.png" />
+  </head>
+
+  <header>
+    <nav>
+      <ul id="nav-bar">
+        <li id="logo">
+          <a href="index.html"><img src="img/logopetcare.png" alt="logo" /></a>
+        </li>
+        <li>
+          <div id="menu-itens">
+            <li id="itens"><a href="cadastrarpet.html">Cadastrar Pet</a></li>
+            <li id="itens">
+              <a href="minhasconsultas.html">Minhas Consultas</a>
+            </li>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <body>
+    <div id="container">
+      <img class="img-cadastro" src="img/logopetcare.png" />
+
+      <div class="button-login">
+        <h2>Agende uma consulta para seu Pet</h2>
+      </div>
+
+      <div class="formulario">
+        <form id="agendamento-form">
+          <label for="pet-name">Nome:</label>
+          <select id="pet-name" name="pet-name" required>
+            <option value="" disabled selected>
+              Escolha um animal cadastrado
+            </option>
+          </select>
+
+          <br />
+
+          <label for="date">Data:</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            required
+            placeholder="Escolha uma data"
+          />
+
+          <br />
+
+          <label for="time">Hora:</label>
+          <input
+            type="time"
+            id="time"
+            name="time"
+            required
+            placeholder="Selecione um horário disponível"
+          />
+
+          <br />
+
+          <label for="motivo">Motivo:</label>
+          <input
+            type="text"
+            id="motivo"
+            name="motivo"
+            required
+            placeholder="Causa do agendamento"
+          />
+
+          <br />
+
+          <label for="tipo">Tipo:</label>
+          <select id="tipo" name="tipo" required>
+            <option value="" disabled selected>
+              Escolha o tipo de atendimento
+            </option>
+            <option value="consulta">Consulta</option>
+            <option value="exame">Exame</option>
+            <option value="cirurgia">Cirurgia</option>
+            <option value="vacina">Vacina</option>
+          </select>
+
+          <br />
+
+          <label for="unit">Unid:</label>
+          <select id="unidade" name="unidade">
+            <option value="" disabled selected>
+              Escolha uma unidade de atendimento
+            </option>
+            <option value="1">Pet Care</option>
+            <option value="2">Pet Saúde</option>
+            <option value="3">Vida Animal</option>
+            <option value="4">Pet Amigos</option>
+            <option value="5">Bicho Feliz</option>
+          </select>
+
+          <br />
+
+          <div>
+            <button type="submit" class="submit">Agendar Consulta</button>
+          </div>
+        </form>
+        <img class="img-footer" src="img/patas_completas.png" />
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("agendamento-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault(); // Evita o envio padrão do formulário
+
+          console.log("chegou");
+
+          const petId = document.getElementById("pet-name").value;
+          const date = document.getElementById("date").value;
+          const time = document.getElementById("time").value;
+          const motivo = document.getElementById("motivo").value;
+          const unidade_id = document.getElementById("unidade").value;
+          const tipo = document.getElementById("tipo").value;
+
+          // Combine a data e a hora em um único timestamp no formato ISO
+          const timestamp = `${date}T${time}:00`;
+
+          try {
+            const response = await fetch(
+              "http://localhost:3000/agendar-consulta",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  id_pet: petId, // Aqui usa o id do pet ao invés do nome
+                  data: date,
+                  horario: timestamp,
+                  detalhes: motivo,
+                  unidade_id,
+                  tipo,
+                }),
+              }
+            );
+
+            if (response.ok) {
+              // Redirecionar para outra página ou mostrar uma mensagem de sucesso
+              window.location.href = "minhasconsultas.html"; // Exemplo de redirecionamento
+            } else {
+              alert("Falha ao agendar consulta. Tente novamente.");
+            }
+          } catch (error) {
+            console.error("Erro ao tentar agendar consulta:", error);
+            alert(
+              "Erro ao tentar agendar consulta. Tente novamente mais tarde."
+            );
+          }
+        });
+
+      async function fetchPets() {
+        try {
+          // Recupere o id_cliente do localStorage
+          const clientId = localStorage.getItem("clientId");
+
+          if (!clientId) {
+            console.error("clientId não encontrado no localStorage.");
+            return;
+          }
+
+          const response = await fetch(
+            `http://localhost:3000/listar-pets?clientId=${clientId}`
+          ); // Ajuste a URL da API conforme necessário
+          if (response.ok) {
+            const pets = await response.json();
+            const petSelect = document.getElementById("pet-name");
+
+            pets.forEach((pet) => {
+              const option = document.createElement("option");
+              option.value = pet.id_pet; // Ajuste conforme necessário (por exemplo, pet.name ou pet.id)
+              option.textContent = pet.nome; // Supondo que "nome" seja a propriedade com o nome do pet
+              petSelect.appendChild(option);
+            });
+          } else {
+            console.error("Erro ao buscar pets:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Erro ao tentar buscar pets:", error);
+        }
+      }
+
+      // Chama a função fetchPets quando a página for carregada
+      window.onload = fetchPets;
+    </script>
+  </body>
+
+  <footer></footer>
+</html>
